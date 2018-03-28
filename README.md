@@ -1,3 +1,10 @@
+---
+title: "Private Chain Support"
+index: 0
+category: "guides"
+type: "content"
+---
+
 # lambda-olorun
 [![codecov](https://codecov.io/gh/uport-project/lambda-olorun/branch/master/graph/badge.svg)](https://codecov.io/gh/uport-project/lambda-olorun)
 

@@ -10,3 +10,5 @@ To add a private network identity for an existing uPort user:
 4. Olorun creates a profile & identity for the user on private network of choice.
 
 You will need to deploy the [uPort identity contracts](https://github.com/uport-project/uport-identity) on your network, either manually or using our [command line interface](https://github.com/uport-project/uport-cli-client).
+
+WARNING: This microservice is in an experimental alpha stage and is not thoroughly tested. Use at your own risk. Pull requests are welcome!

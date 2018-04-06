@@ -26,10 +26,10 @@ class UPortMgr {
         this.callbackUrl=secrets.CALLBACK_URL
     }
     
-    async requestToken(networkId){
+    async requestToken(networkId,callbackParams){
         let requestOpts={
             notifications: true,
-            callbackUrl: this.callbackUrl,
+            callbackUrl: this.callbackUrl+'/'+networkId+callbackParams,
             accountType: 'devicekey',
             network_id: networkId,
             exp: 1522540800 // Sunday, 1 de April de 2018 0:00:00 GMT

@@ -1,5 +1,5 @@
 module.exports = {
-    0x3039: {
+    "0x3039": {
         rpcUrl: 'http://104.214.116.254:8545/',
         defaultGasPrice: 20000000000, // 20 Gwei
         uPort: {
@@ -8,15 +8,15 @@ module.exports = {
             TxRelay: '0x6a841ba0ea1a88cfbc085220fc6b65973afca431'
         } 
     },
-    0x1552DED547:{
+    "0x1552DED547":{
         rpcUrl: 'http://35.176.19.89:22000',
         defaultGasPrice: 20000000000, // 20 Gwei
         uPort: {
-            IdentityManager: '0x0',
-            MetaIdentityManager: '0x0',
-            TxRelay: '0x0'
+            IdentityManager: '0x47d224f31f693c1efd717dc86f3e6ca5af532e9b',
+            MetaIdentityManager: '0xa8c8337c3deba6d8f96a3efd1ccd00250a34b14e',
+            TxRelay: '0xe8294a32046afc953132c04075c6e784308f54a2'
         }
     },
-    default: '0x3039'
+    default: "0x3039"
 }
   

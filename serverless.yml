@@ -31,6 +31,9 @@ custom:
   kmsSecrets: ${file(kms-secrets.${opt:stage, self:provider.stage}.${opt:region, self:provider.region}.yml)}
 
 functions:
+  deployContracts:
+    handler: src/script_handler.deployContracts
+    description: deploy uPort Contracts on private network
   checkBalances:
     handler: src/jobs_handler.checkBalances
     description: uPort check for balances on all address used and report if low funds

@@ -1,5 +1,4 @@
 import { TxRelay } from 'uport-identity'
-import privateUportContracts from './private-uport-contracts'
 import Contract from 'truffle-contract'
 import { signers } from 'eth-signer'
 
@@ -9,52 +8,44 @@ const TxRelaySigner = signers.TxRelaySigner
 
 class MetaTxMgr {
 
-  constructor(ethereumMgr) {
+  constructor(ethereumMgr,blockchainMgr) {
     this.txRelayers = {}
     this.ethereumMgr=ethereumMgr;
+    this.blockchainMgr=blockchainMgr;
+    
   }
 
-  async initTxRelayer(networkName) {
-    if(!networkName) throw('no networkName')
-    if (!this.txRelayers[networkName]) {
+  async initTxRelayer(networkId) {
+    if(!networkId) throw('no networkId')
+    if (!this.txRelayers[networkId]) {
+      let abi = txRelayArtifact.abi
 
-      //Private network support
-      const networkId = this.ethereumMgr.getNetworkId(networkName)
-      if(!txRelayArtifact.networks[networkId].address){
-        txRelayArtifact.networks[networkId] = {
-          address: privateUportContracts[networkName].TxRelay,
-          links: {}
-        }
-      }
-
-      let TxRelayContract = new Contract(txRelayArtifact)
-      let provider=this.ethereumMgr.getProvider(networkName)
-      if(provider==null) throw ('null provider')
-      TxRelayContract.setProvider(provider)
-      this.txRelayers[networkName] = await TxRelayContract.deployed()
+      let txRelayAddr=blockchainMgr.getTxRelayAddress(networkId,managerType);
+      let txRelayContract = this.ethereumMgr.getContract(abi,networkId)
+      this.txRelayers[networkId] = txRelayContract.at(txRelayAddr)
     }
   }
 
-  async getRelayerAddress(networkName) {
-    await this.initTxRelayer(networkName)
-    return this.txRelayers[networkName].address
+  async getRelayerAddress(networkId) {
+    await this.initTxRelayer(networkId)
+    return this.txRelayers[networkId].address
   }
 
-  async getRelayNonce(address, networkName) {
+  async getRelayNonce(address, networkId) {
     if(!address) throw('no address')
-    await this.initTxRelayer(networkName)
-    let nonce = await this.txRelayers[networkName].getNonce(address)
+    await this.initTxRelayer(networkId)
+    let nonce = await this.txRelayers[networkId].getNonce(address)
     console.log('network nonce: ' + nonce)
     console.log(typeof (nonce))
     return nonce.toString(16)
   }
 
-  async isMetaSignatureValid({metaSignedTx, blockchain, metaNonce}) {
+  async isMetaSignatureValid({metaSignedTx, networkId, metaNonce}) {
     if(!metaSignedTx) throw('no metaSignedTx')
-    if(!blockchain) throw('no blockchain')
+    if(!networkId) throw('no networkId')
     const decodedTx = TxRelaySigner.decodeMetaTx(metaSignedTx)
-    const relayerAddress = await this.getRelayerAddress(blockchain)
-    let nonce = await this.getRelayNonce(decodedTx.claimedAddress, blockchain)
+    const relayerAddress = await this.getRelayerAddress(networkId)
+    let nonce = await this.getRelayNonce(decodedTx.claimedAddress, networkId)
     if (metaNonce !== undefined && metaNonce > nonce) {
       nonce = metaNonce.toString()
     }

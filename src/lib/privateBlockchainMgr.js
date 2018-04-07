@@ -10,17 +10,18 @@ class privateBlockchainMgr {
     getSupportedNetworkIds(){
         let networkIds=[]    
         for (const networkId in privateBlockchains) {
+            if(networkId != 'default')
             networkIds.push(networkId);
         }
         return networkIds;
     }
 
     getDefaultNetworkId(){
-        privateBlockchains.default;
+        return privateBlockchains.default;
     }
     
     getRpcUrl(networkId){
-        privateBlockchains[networkId].rpcUrl;
+        return privateBlockchains[networkId].rpcUrl;
     }
 
     getDefaultGasPrice(networkId){
@@ -34,6 +35,10 @@ class privateBlockchainMgr {
     getIdentityManagerAddress(networkId,managerType){
        return privateBlockchains[networkId].uPort[managerType]
     }
+
+    getTxRelayAddress(networkId){
+        return privateBlockchains[networkId].uPort.TxRelay
+     }
 
 
 }

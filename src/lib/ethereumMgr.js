@@ -43,9 +43,9 @@ class EthereumMgr {
 
       const supportedNetworkIds = this.blockchainMgr.getSupportedNetworkIds()
 
-      for (const networkId in supportedNetworkIds) {
+      for (let i = 0; i < supportedNetworkIds.length; i++) {
+        const networkId=supportedNetworkIds[i];
         let rpcUrl = this.blockchainMgr.getRpcUrl(networkId);
-
         let provider = new SignerProvider(rpcUrl,txSigner);
         let web3 = new Web3(provider)
         web3.eth = Promise.promisifyAll(web3.eth)

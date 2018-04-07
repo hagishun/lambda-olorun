@@ -37,7 +37,7 @@ class RequestTokenHandler {
       const callbackParams='?callback='+callerCallback;
 
       try{
-        let requestToken= await this.uPortMgr.requestToken(networkId,calbackParams);
+        let requestToken= await this.uPortMgr.requestToken(networkId,callbackParams);
         let request='me.uport:me?requestToken='+requestToken
         cb(null,request)
       } catch (error){

@@ -14,9 +14,9 @@ const RelayHandler = require('./handlers/relay')
 
 let uPortMgr = new UPortMgr()
 let privateBlockchainMgr = new PrivateBlockchainMgr()
-let ethereumMgr = new EthereumMgr()
+let ethereumMgr = new EthereumMgr(privateBlockchainMgr)
 let identityManagerMgr = new IdentityManagerMgr(ethereumMgr,privateBlockchainMgr)
-let metaTxMgr = new MetaTxMgr(ethereumMgr)
+let metaTxMgr = new MetaTxMgr(ethereumMgr,privateBlockchainMgr)
 
 let requestTokenHandler = new RequestTokenHandler(uPortMgr)
 let createIdentityHandler = new CreateIdentityHandler(uPortMgr,identityManagerMgr)

@@ -24,6 +24,10 @@ class privateBlockchainMgr {
         return privateBlockchains[networkId].rpcUrl;
     }
 
+    getThreshold(networkId,stage){
+        return privateBlockchains[networkId].threshold[stage];
+    }
+
     getDefaultGasPrice(networkId){
         if(!privateBlockchains[networkId].defaultGasPrice){
             return DEFAULT_GAS_PRICE;

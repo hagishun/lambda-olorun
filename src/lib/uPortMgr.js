@@ -31,8 +31,7 @@ class UPortMgr {
             notifications: true,
             callbackUrl: this.callbackUrl+'/'+networkId+callbackParams,
             accountType: 'devicekey',
-            network_id: networkId,
-            exp: 1522540800 // Sunday, 1 de April de 2018 0:00:00 GMT
+            network_id: networkId
         }
         return this.credentials.createRequest(requestOpts);
     }

@@ -42,7 +42,7 @@ class IdentityManagerMgr {
     if (!idMgrs[networkId]) {
       let abi = idMgrArtifact.abi
 
-      let imAddr=blockchainMgr.getIdentityManagerAddress(networkId,managerType);
+      let imAddr=this.blockchainMgr.getIdentityManagerAddress(networkId,managerType);
       let IdMgrContract = this.ethereumMgr.getContract(abi,networkId)
       idMgrs[networkId] = IdMgrContract.at(imAddr)
       idMgrs[networkId] = Promise.promisifyAll(idMgrs[networkId])
@@ -103,7 +103,7 @@ class IdentityManagerMgr {
   async storeIdentityCreation(deviceKey, txHash, networkId, managerType, managerAddress) {
     if(!deviceKey) throw('no deviceKey')
     if(!txHash) throw('no txHash')
-    if(!networkName) throw('no networkId')
+    if(!networkId) throw('no networkId')
     if(!managerType) throw('no managerType')
     if(!managerAddress) throw('no managerAddress')
     if(!this.pgUrl) throw('no pgUrl set')

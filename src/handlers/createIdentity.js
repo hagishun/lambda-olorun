@@ -1,8 +1,9 @@
 import { encode } from 'mnid'
 
 class CreateIdentityHandler {
-    constructor (uPortMgr,identityManagerMgr) {
+    constructor (uPortMgr, blockchainMgr, identityManagerMgr) {
         this.uPortMgr = uPortMgr
+        this.blockchainMgr = blockchainMgr
         this.identityManagerMgr = identityManagerMgr
     }
 
@@ -28,8 +29,19 @@ class CreateIdentityHandler {
             return;
         }
 
-        const networkName='msft' //This can be read from the url? Hardcoded for now
-        const networkId='0x3039'
+        let networkId;
+        if (event.pathParameters && event.pathParameters.networkId) {
+            networkId = event.pathParameters.networkId
+        }else{
+            networkId = this.blockchainMgr.getDefaultNetworkId();
+        }
+        console.log("networkId:"+networkId);
+
+        let callback;
+        if (event.queryStringParameters && event.queryStringParameters.callback) {
+            callback = event.queryStringParameters.callback;
+            console.log("callback:"+callback);
+        }
 
         console.log("access_token:"+body.access_token);
 
@@ -61,7 +73,7 @@ class CreateIdentityHandler {
             let identityOpts={
                 deviceKey: deviceKey,
                 managerType: 'MetaIdentityManager',
-                blockchain: networkId
+                networkId: networkId
             }
             const {managerAddress,txHash} = await this.identityManagerMgr.createIdentity(identityOpts) 
             console.log("managerAddress:"+managerAddress)
@@ -86,7 +98,7 @@ class CreateIdentityHandler {
                 console.log("Waiting 1000 ms")
                 await delay(1000);
                 console.log("calling identityManagerMgr.getIdentityFromTxHash")
-                idAddress=await this.identityManagerMgr.getIdentityFromTxHash(idCreationtxHash,networkName)
+                idAddress=await this.identityManagerMgr.getIdentityFromTxHash(idCreationtxHash,networkId)
                 console.log("idAddress:"+idAddress)
             } catch(err) {
                 console.log("Error on this.identityManagerMgr.getIdentityFromTxHash")

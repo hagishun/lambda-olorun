@@ -12,7 +12,12 @@ const EthereumMgr = require("../ethereumMgr");
 describe("EthereumMgr", () => {
   let sut;
   let blockchainMgr = {
-    getSupportedNetworkIds: jest.fn()
+    getSupportedNetworkIds: () => {
+      return [];
+    },
+    getRpcUrl: () => {
+      return "fakeRpcUrl";
+    }
   };
   let seed =
     "kitten lemon sea enhance poem grid calm battle never summer night express";

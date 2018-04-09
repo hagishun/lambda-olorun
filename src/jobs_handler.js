@@ -1,14 +1,16 @@
 'use strict'
 const AWS = require('aws-sdk');
 
+const PrivateBlockchainMgr = require('./lib/privateBlockchainMgr')
 const EthereumMgr = require('./lib/ethereumMgr')
 const SlackMgr = require('./lib/slackMgr')
 const CheckBalancesHandler = require('./handlers/checkBalances')
 
-let ethereumMgr = new EthereumMgr()
+let privateBlockchainMgr = new PrivateBlockchainMgr()
+let ethereumMgr = new EthereumMgr(privateBlockchainMgr)
 let slackMgr = new SlackMgr()
 
-let checkBalances = new CheckBalancesHandler(ethereumMgr,slackMgr)
+let checkBalances = new CheckBalancesHandler(ethereumMgr, privateBlockchainMgr, slackMgr)
 
 module.exports.checkBalances = (event, context, callback) => { preHandler(checkBalances,event,context,callback) }
 

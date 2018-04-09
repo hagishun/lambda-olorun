@@ -51,7 +51,7 @@ functions:
     timeout: 300
     events:
      - http:
-         path: createIdentity
+         path: createIdentity/{networkId}
          method: post
   relay:
     handler: src/api_handler.relay

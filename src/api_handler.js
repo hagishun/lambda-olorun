@@ -14,12 +14,12 @@ const RelayHandler = require('./handlers/relay')
 
 let uPortMgr = new UPortMgr()
 let privateBlockchainMgr = new PrivateBlockchainMgr()
-let ethereumMgr = new EthereumMgr()
+let ethereumMgr = new EthereumMgr(privateBlockchainMgr)
 let identityManagerMgr = new IdentityManagerMgr(ethereumMgr,privateBlockchainMgr)
-let metaTxMgr = new MetaTxMgr(ethereumMgr)
+let metaTxMgr = new MetaTxMgr(ethereumMgr,privateBlockchainMgr)
 
-let requestTokenHandler = new RequestTokenHandler(uPortMgr)
-let createIdentityHandler = new CreateIdentityHandler(uPortMgr,identityManagerMgr)
+let requestTokenHandler = new RequestTokenHandler(uPortMgr,privateBlockchainMgr)
+let createIdentityHandler = new CreateIdentityHandler(uPortMgr,privateBlockchainMgr,identityManagerMgr)
 let relayHandler = new RelayHandler(ethereumMgr,metaTxMgr)
 
 module.exports.requestToken = (event, context, callback) => { preHandler(requestTokenHandler,event,context,callback) }

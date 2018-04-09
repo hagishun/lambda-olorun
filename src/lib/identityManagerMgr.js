@@ -32,7 +32,7 @@ class IdentityManagerMgr {
         break;
       case "MetaIdentityManager":
         idMgrs = this.metaIdentityManagers;
-        idMgrArtifact = MetaIdentityManager.v2;
+        idMgrArtifact = MetaIdentityManager.v3;
         break;
       default:
         throw "invalid managerType";
@@ -41,7 +41,7 @@ class IdentityManagerMgr {
     if (!idMgrs[networkId]) {
       let abi = idMgrArtifact.abi;
 
-      let imAddr = blockchainMgr.getIdentityManagerAddress(
+      let imAddr = this.blockchainMgr.getIdentityManagerAddress(
         networkId,
         managerType
       );
@@ -219,7 +219,7 @@ class IdentityManagerMgr {
 
   async decodeLogs(txReceipt) {
     if (!txReceipt) throw "no txReceipt";
-    const idMgrArtifact = MetaIdentityManager.v2; //TODO: need to fix this
+    const idMgrArtifact = MetaIdentityManager.v3; //TODO: need to fix this
 
     let eventAbi = idMgrArtifact.abi.filter(o => {
       return o.name === "LogIdentityCreated";

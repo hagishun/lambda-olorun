@@ -6,21 +6,23 @@ class privateBlockchainMgr {
   constructor() {}
 
   getSupportedNetworkIds() {
-    console.log("private blockchains", privateBlockchains);
     let networkIds = [];
     for (const networkId in privateBlockchains) {
-      console.log("networkId", networkId);
-      networkIds.push(networkId);
+      if (networkId != "default") networkIds.push(networkId);
     }
     return networkIds;
   }
 
   getDefaultNetworkId() {
-    privateBlockchains.default;
+    return privateBlockchains.default;
   }
 
   getRpcUrl(networkId) {
-    privateBlockchains[networkId].rpcUrl;
+    return privateBlockchains[networkId].rpcUrl;
+  }
+
+  getThreshold(networkId, stage) {
+    return privateBlockchains[networkId].threshold[stage];
   }
 
   getDefaultGasPrice(networkId) {
@@ -33,6 +35,10 @@ class privateBlockchainMgr {
 
   getIdentityManagerAddress(networkId, managerType) {
     return privateBlockchains[networkId].uPort[managerType];
+  }
+
+  getTxRelayAddress(networkId) {
+    return privateBlockchains[networkId].uPort.TxRelay;
   }
 }
 module.exports = privateBlockchainMgr;

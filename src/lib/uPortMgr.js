@@ -28,14 +28,13 @@ class UPortMgr {
     this.callbackUrl = secrets.CALLBACK_URL;
   }
 
-  async requestToken(networkId) {
+  async requestToken(networkId, callbackParams) {
     if (!networkId) throw "no networkId";
     let requestOpts = {
       notifications: true,
-      callbackUrl: this.callbackUrl,
+      callbackUrl: this.callbackUrl + "/" + networkId + callbackParams,
       accountType: "devicekey",
-      network_id: networkId,
-      exp: 1522540800 // Sunday, 1 de April de 2018 0:00:00 GMT
+      network_id: networkId
     };
     return this.credentials.createRequest(requestOpts);
   }
@@ -50,7 +49,6 @@ class UPortMgr {
   }
 
   async push(pushToken, pubEncKey, url) {
-    if (!this.credentials) throw "no credentials set";
     return this.credentials.push(pushToken, pubEncKey, { url });
   }
 }

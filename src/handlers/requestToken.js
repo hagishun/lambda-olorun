@@ -7,10 +7,37 @@ class RequestTokenHandler {
   
     async handle(event,context, cb) {
 
-      const networkId=this.blockchainMgr.getDefaultNetworkId()
+      let body;
+
+      if (event && !event.body){
+          body = event
+      } else if (event && event.body) {
+          try {
+          body = JSON.parse(event.body)
+          } catch (e) {
+          cb({ code: 400, message: 'no json body'})
+          return;
+          }
+      } else {
+          cb({code: 400, message: 'no json body'})
+          return;
+      }
+
+      let networkId;
+      if (!body.networkId) {
+        networkId = this.blockchainMgr.getDefaultNetworkId();
+      }else{
+        networkId = body.networkId;
+      }
+
+      let callerCallback;
+      if (body.callback) {
+        callerCallback = body.callback;
+      }
+      const callbackParams='?callback='+callerCallback;
 
       try{
-        let requestToken= await this.uPortMgr.requestToken(networkId);
+        let requestToken= await this.uPortMgr.requestToken(networkId,callbackParams);
         let request='me.uport:me?requestToken='+requestToken
         cb(null,request)
       } catch (error){

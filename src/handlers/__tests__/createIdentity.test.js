@@ -60,7 +60,10 @@ describe("CreateIdentityHandler", () => {
       return { deviceKey: deviceKey };
     });
     identityManagerMgrMock.createIdentity.mockImplementation(() => {
-      return { managerAddress: "0xmgraddress", txHash: "0xtxhash" };
+      return {
+        managerAddress: "0xD4bF80cE7be51Dc6861cb260cEd74aB98f520700",
+        txHash: "0x99e8ba41Ebaa930ea8cd992C8eD497D5e4207bdC"
+      };
     });
     identityManagerMgrMock.getIdentityFromTxHash.mockImplementation(() => {
       return "0x12345";

@@ -104,29 +104,6 @@ describe("RelayHandler", () => {
       });
     });
 
-    // test("handle failed ethereumMgr.signTx", async () => {
-    //   metaTxMgr.decodeMetaTx.mockImplementation(() => {
-    //     return { claimedAddress: "0xe4c7b7aba88156a3caf4c7bdaf5d3cbd6229081b" };
-    //   });
-    //   ethereumMgr.signTx.mockImplementation(() => {
-    //     throw { message: "failed" };
-    //   });
-    //   let bodyRaw = { metaSignedTx: validMetaSignedTx, blockchain: "test" };
-    //   let event = {
-    //     body: JSON.stringify(bodyRaw)
-    //   };
-    //   await sut.handle(event, {}, (err, txHash) => {
-    //     expect(metaTxMgr.isMetaSignatureValid).toBeCalledWith(bodyRaw);
-    //     expect(ethereumMgr.signTx).toBeCalledWith({
-    //       txHex: bodyRaw.metaSignedTx,
-    //       blockchain: bodyRaw.blockchain
-    //     });
-    //     expect(err.code).toEqual(500);
-    //     expect(err.message).toEqual("failed");
-    //     expect(txHash).toBeUndefined();
-    //   });
-    // });
-
     test("handle failed ethereumMgr.sendRawTransaction", async () => {
       metaTxMgr.isMetaSignatureValid.mockImplementation(() => {
         return true;

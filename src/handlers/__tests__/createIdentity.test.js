@@ -3,7 +3,11 @@ const CreateIdentityHandler = require("../createIdentity");
 describe("CreateIdentityHandler", () => {
   let sut;
   let access_token = "0xat";
-  let deviceKey = "0xdeviceKey";
+  let deviceKey = "0x8f7a1e41018fbb94caa18281e4d6acfc77521672";
+  let txHash =
+    "0x6e2fce45a5b97d9c7902f869851824013f6cf00a7c14a30b8158945844d24f21";
+  let managerAddress = "0x95f35f87608c3a871838f11cbefa8bd76fdf5686";
+  let managerType = "IdentityManager";
   let recoveryKey = "0xrecoveryKey";
   let uportMgrMock = {
     receiveAccessToken: jest.fn(),
@@ -61,21 +65,21 @@ describe("CreateIdentityHandler", () => {
     });
     identityManagerMgrMock.createIdentity.mockImplementation(() => {
       return {
-        managerAddress: "0xD4bF80cE7be51Dc6861cb260cEd74aB98f520700",
-        txHash: "0x99e8ba41Ebaa930ea8cd992C8eD497D5e4207bdC"
+        managerAddress: managerAddress,
+        txHash: txHash
       };
     });
     identityManagerMgrMock.getIdentityFromTxHash.mockImplementation(() => {
-      return "0x12345";
+      return txHash;
     });
     blockchainMgrMock.getDefaultNetworkId.mockImplementation(() => {
-      return "0x63";
+      return "0x99";
     });
 
     let event = {
       access_token: deviceKey,
       blockchain: null,
-      managerType: "anyType"
+      managerType: managerType
     };
     sut.handle(event, {}, (err, res) => {
       expect(err).toBeNull();

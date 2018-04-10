@@ -2,6 +2,7 @@ const UPortMgr = require("../uPortMgr");
 
 describe("UPortmgr", () => {
   let sut;
+  let netId = "0x99";
 
   beforeAll(() => {
     sut = new UPortMgr();
@@ -30,7 +31,7 @@ describe("UPortmgr", () => {
     expect(sut.signer).not.toBeUndefined();
   });
 
-  test("requestToken() no networkId", () => {
+  test("requestToken() no networkId", done => {
     sut
       .requestToken()
       .then(resp => {
@@ -43,17 +44,9 @@ describe("UPortmgr", () => {
       });
   });
 
-  test("requestToken() happy path", () => {
-    sut.requestToken().then(resp => {
+  test("requestToken() happy path", async () => {
+    sut.requestToken(netId).then(resp => {
       expect(resp).not.toBeNull();
-      done();
-    });
-  });
-
-  test("receiveAccessToken() no credentials", () => {
-    sut.requestToken().then(resp => {
-      expect(resp).not.toBeNull();
-      done();
     });
   });
 });

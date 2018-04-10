@@ -43,16 +43,14 @@ describe("EthereumMgr", () => {
     expect(secretSet).toEqual(false);
   });
 
-  test("getNonce() no pgUrl set", done => {
+  test("getNonce() no pgUrl set", async () => {
     sut
       .getNonce("a", "n")
       .then(resp => {
         fail("shouldn't return");
-        done();
       })
       .catch(err => {
         expect(err).toEqual("no pgUrl set");
-        done();
       });
   });
 
@@ -65,53 +63,46 @@ describe("EthereumMgr", () => {
     expect(sut.signer).not.toBeUndefined();
   });
 
-  test("getProvider() no networkName", done => {
+  test("getProvider() no networkName", async () => {
     let p = sut.getProvider();
     expect(p).toBeNull();
-    done();
   });
 
   describe("getBalance()", () => {
-    test("no address", done => {
+    test("no address", async () => {
       sut
         .getBalance(null, "network")
         .then(resp => {
           fail("shouldn't return");
-          done();
         })
         .catch(err => {
           expect(err).toEqual("no address");
-          done();
         });
     });
 
-    test("no networkId", done => {
+    test("no networkId", async () => {
       sut
         .getBalance("address", null)
         .then(resp => {
           fail("shouldn't return");
-          done();
         })
         .catch(err => {
           expect(err).toEqual("no networkId");
-          done();
         });
     });
 
-    test("no web3 for networkId", done => {
+    test("no web3 for networkId", async () => {
       sut
         .getBalance("address", "network")
         .then(resp => {
           fail("shouldn't return");
-          done();
         })
         .catch(err => {
           expect(err).toEqual("no web3 for networkId");
-          done();
         });
     });
 
-    test("happy path", done => {
+    test("happy path", async () => {
       sut.web3s["network"] = {
         eth: {
           getBalanceAsync: jest.fn()
@@ -121,75 +112,65 @@ describe("EthereumMgr", () => {
         expect(sut.web3s["network"].eth.getBalanceAsync).toBeCalledWith(
           "address"
         );
-        done();
       });
     });
   });
 
   describe("getTransactionReceipt", () => {
-    test("no txHash", done => {
+    test("no txHash", async () => {
       sut
         .getTransactionReceipt(null)
         .then(resp => {
           fail("shouldn't return");
-          done();
         })
         .catch(err => {
           expect(err).toEqual("no txHash");
-          done();
         });
     });
 
-    test("no networkId", done => {
+    test("no networkId", async () => {
       sut
         .getTransactionReceipt("0x0")
         .then(resp => {
           fail("shouldn't return");
-          done();
         })
         .catch(err => {
           expect(err).toEqual("no networkId");
-          done();
         });
     });
 
-    test("no web3 for networkId", done => {
+    test("no web3 for networkId", async () => {
       sut
         .getTransactionReceipt("0x0", "0x1231")
         .then(resp => {
           fail("shouldn't return");
-          done();
         })
         .catch(err => {
           expect(err).toEqual("no web3 for networkId");
-          done();
         });
     });
   });
 
   describe("getGasPrice()", () => {
-    test("no networkId", done => {
+    test("no networkId", async () => {
       sut
         .getGasPrice(null)
         .then(resp => {
           fail("shouldn't return");
-          done();
         })
         .catch(err => {
           expect(err).toEqual("no networkId");
-          done();
         });
     });
 
-    test("no web3 for networkId", done => {
+    test("no web3 for networkId", async () => {
       sut.gasPrices["network"] = 99;
       sut.getGasPrice("network").then(resp => {
         expect(resp).toEqual(99);
-        done();
       });
     });
 
-    test("happy path", done => {
+    test("happy path", async () => {
       sut.web3s["network"] = {
         eth: {
           getGasPriceAsync: jest.fn()
@@ -197,39 +178,34 @@ describe("EthereumMgr", () => {
       };
       sut.getGasPrice("network").then(resp => {
         expect(sut.web3s["network"].eth.getGasPriceAsync).toBeCalled();
-        done();
       });
     });
   });
 
   describe("getNonce()", () => {
-    test("no address", done => {
+    test("no address", async () => {
       sut
         .getNonce(null, "network")
         .then(resp => {
           fail("shouldn't return");
-          done();
         })
         .catch(err => {
           expect(err).toEqual("no address");
-          done();
         });
     });
 
-    test("no networkId", done => {
+    test("no networkId", async () => {
       sut
         .getNonce("address", null)
         .then(resp => {
           fail("shouldn't return");
-          done();
         })
         .catch(err => {
           expect(err).toEqual("no networkId");
-          done();
         });
     });
 
-    test("throw exception", done => {
+    test("throw exception", async () => {
       pgClientMock.connect.mockImplementation(() => {
         throw "throwed error";
       });
@@ -237,15 +213,13 @@ describe("EthereumMgr", () => {
         .getNonce("address", "network")
         .then(resp => {
           fail("shouldn't return");
-          done();
         })
         .catch(err => {
           expect(err).toEqual("throwed error");
-          done();
         });
     });
 
-    test("happy path", done => {
+    test("happy path", async () => {
       pgClientMock.connect = jest.fn();
       pgClientMock.connect.mockClear();
       pgClientMock.end.mockClear();
@@ -273,7 +247,6 @@ describe("EthereumMgr", () => {
         );
         expect(pgClientMock.end).toBeCalled();
         expect(resp).toEqual(10);
-        done();
       });
     });
   });

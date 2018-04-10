@@ -201,33 +201,6 @@ describe("IdentityManagerMgr", () => {
       });
   });
 
-  test.skip("empty recoverykey", done => {
-    sut.identityManagers = jest.fn(() => {
-      return Promise.resolve({ rinkeby: { address: "0x0" } });
-    });
-    sut.initIdentityManager = jest.fn();
-
-    sut
-      .createIdentity({
-        deviceKey: deviceKey,
-        recoveryKey: deviceKey,
-        blockchain: networkName,
-        managerType: "IdentityManager",
-        payload: {
-          destination: "0x0",
-          data: "dummy"
-        }
-      })
-      .then(resp => {
-        fail("shouldn't return");
-        done();
-      })
-      .catch(err => {
-        expect(err).toEqual("payload but no payload.data");
-        done();
-      });
-  });
-
   test("storeIdentityCreation() no deviceKey", done => {
     sut
       .storeIdentityCreation(null)

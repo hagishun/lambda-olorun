@@ -12,8 +12,9 @@ class MetaTxMgr {
     this.blockchainMgr = blockchainMgr;
   }
 
-  async initTxRelayer(networkId) {
+  async initTxRelayer(networkId, managerType) {
     if (!networkId) throw "no networkId";
+    if (!managerType) throw "no managerType";
     if (!this.txRelayers[networkId]) {
       let abi = txRelayArtifact.abi;
 
@@ -30,6 +31,7 @@ class MetaTxMgr {
 
   async getRelayNonce(address, networkId) {
     if (!address) throw "no address";
+    if (!networkId) throw "no networkId";
     await this.initTxRelayer(networkId);
     let nonce = await this.txRelayers[networkId].getNonce(address);
     console.log("network nonce: " + nonce);

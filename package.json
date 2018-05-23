@@ -1,6 +1,6 @@
 {
   "name": "lambda-olorun",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "uPort private network support",
   "main": "index.js",
   "scripts": {

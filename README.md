@@ -84,7 +84,6 @@ sls deploy
 ## Contributing
 
 The build leverages the serverless framework provided by AWS Lambda. AWS Lambda lets you run code without provisioning or managing servers. You pay only for the compute time you consume - there is no charge when your code is not running.)
->>>>>>> 1.0.1
 
 
 

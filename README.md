@@ -1,6 +1,6 @@
 ---
 title: "Private Chain Support"
-index: 0
+index: 5
 category: "guides"
 type: "content"
 ---

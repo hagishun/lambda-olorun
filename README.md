@@ -3,6 +3,7 @@ title: "Private Chain Support"
 index: 5
 category: "guides"
 type: "content"
+source: "https://github.com/uport-project/lambda-olorun/blob/master/README.md"
 ---
 
 # lambda-olorun
@@ -16,7 +17,7 @@ _[Olorun](https://en.wikipedia.org/wiki/Olorun) (Yoruba: Ọlọrun or Ọlọhu
 _**WARNING**: This microservice is in an experimental alpha stage and is not thoroughly tested. Also we are doing some heavy changes. Use at your own risk. Pull requests are welcome!_
 
 
-lambda-olorun consists of a private chain onobarding service for the uPort platform. The purpose of the service is to allow uPort users to create an identity on a private chain. The identity contracts needs to be deployed on the private network and the service configured to use it. 
+lambda-olorun consists of a private chain onobarding service for the uPort platform. The purpose of the service is to allow uPort users to create an identity on a private chain. The identity contracts needs to be deployed on the private network and the service configured to use it.
 
 The onboarding process for a uPort user using olorun is the following:
 1. Olorun create selective disclosure, requesting the `deviceKey` of the user
@@ -66,6 +67,3 @@ sls deploy
 ## Contributing
 
 The build leverages the serverless framework provided by AWS Lambda. AWS Lambda lets you run code without provisioning or managing servers. You pay only for the compute time you consume - there is no charge when your code is not running.)
-
-
-
